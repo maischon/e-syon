@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "e-syon"
+version = "0.1.0"
+description = ""
+authors = ["Simon Navratil"]
+readme = "README.md"
+packages = [{include = "e_syon"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+http_request = "^1.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
