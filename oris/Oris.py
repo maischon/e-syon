@@ -19,7 +19,7 @@ class Oris:
                        all: bool = False,
                        name: str = None,
                        sport: Sport = Sport.OB,
-                       region: Region = Region.CR,
+                       region: Region = None,
                        level: Level = None,
                        date_from: dt.date = None,
                        date_to: dt.date = None,

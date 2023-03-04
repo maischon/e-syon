@@ -1,5 +1,4 @@
 from RocenkaImpl import RocenkaImpl
-from oris.Oris import Oris
 import datetime as dt
 
 
@@ -26,6 +25,14 @@ class Rocenka(RocenkaImpl):
         :return: Table containing skalper
         """
         return self._calculate_skalper(year)
+    def calculate_skalperka(self, year: int = dt.datetime.now().year):
+        """
+        Calculates skalperka for given year.
+        :return: Table containing skalper
+        """
+        return self._calculate_skalperka(year)
+
+    # TODO obeslo
 
 
 if __name__ == '__main__':
@@ -33,6 +40,7 @@ if __name__ == '__main__':
     # print(Oris().getCSOSClubList())
 
     r = Rocenka("PGP")
+    # r.test()
     # print(r.calculate_skalper(2022))
-    print(r.calculate_larva(2022))
+    # print(r.calculate_larva(2022))
     print(r.calculate_klada(2022))

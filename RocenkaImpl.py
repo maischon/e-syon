@@ -5,6 +5,7 @@ from itertools import groupby
 import pandas as pd
 
 from Klada import Klada
+from Skalper import Skalper
 from oris.Oris import Oris
 from oris.util import generate_fields
 
@@ -45,6 +46,23 @@ class RocenkaImpl:
         self.my_club: Club = _get_club(club_ame, self.oris)
         self.year_results = {}
 
+    # def test(self):
+    #
+    #     print(self.oris.get_event_list(all=True,
+    #                                       my_club=self.my_club.id,
+    #                                       date_from=dt.date(2022, 1, 1),
+    #                                       date_to=dt.date(2022, 12, 31)
+    #                                       ))
+    #
+    #     results = self._obtain_results([5558])
+    #     relevant_results = self._filter_club_and_categories(results)
+    #
+    #     final_results = self._split_by_category(relevant_results)
+    #
+    #     results = [self._create_table(result) for result in final_results]
+    #     ret = Klada().calculate(self.filter(results, Category.MEN))
+    #     print(ret)
+
     def _calculate_larva(self, year):
         results = self._get_year_results(year)
         return Klada().calculate(self.filter(results, Category.WOMAN))
@@ -56,7 +74,12 @@ class RocenkaImpl:
     def _calculate_skalper(self, year):
         results = self._get_year_results(year)
         # TODO
-        return results
+        return Skalper().calculate(self.filter(results, Category.MEN))
+
+    def _calculate_skalperka(self, year):
+        results = self._get_year_results(year)
+        # TODO
+        return Skalper().calculate(self.filter(results, Category.WOMAN))
 
     def _get_year_results(self, year: int) -> list[pd.DataFrame]:
         """
