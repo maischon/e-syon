@@ -1,4 +1,5 @@
 import datetime as dt
+import pickle
 from enum import Enum
 from itertools import groupby
 
@@ -70,6 +71,10 @@ class RocenkaImpl:
 
     def _load(self, year: int):
         self.year_results[year] = self._obtain_year_results(year)
+
+    def _save_loaded_data(self):
+        with open('tmp.pickle', 'wb') as f:
+            pickle.dump(self.year_results, f)
 
     def _calculate_klada(self, year: int, category: Category):
         results = self._get_year_results(year)
