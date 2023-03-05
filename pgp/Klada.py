@@ -2,8 +2,6 @@ from collections import defaultdict
 
 import pandas as pd
 
-from oris.util import generate_fields
-
 
 class Klada:
     def __init__(self):

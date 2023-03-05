@@ -4,10 +4,11 @@ from itertools import groupby
 
 import pandas as pd
 
-from Klada import Klada
 from Skalper import Skalper
 from oris.Oris import Oris
-from oris.util import generate_fields
+from utils.util import generate_fields
+from pgp.Klada import Klada
+
 
 @generate_fields
 class Club:
@@ -18,17 +19,18 @@ class Club:
     def create(cls, club: dict):
         return cls(club["ID"], club["Abbr"])
 
+
 class Category(Enum):
     MEN = 1,
     WOMAN = 2
 
-    @staticmethod
-    def from_str(category: str):
-        if "H" in category.upper() or "M" in category.upper():
-            return Category.MEN
-        if "D" in category.upper() or "W" in category.upper():
-            return Category.WOMAN
-        raise Exception("Unknown category: " + category)
+def from_str(category: str):
+    if "H" in category.upper() or "M" in category.upper():
+        return Category.MEN
+    if "D" in category.upper() or "W" in category.upper():
+        return Category.WOMAN
+    raise Exception("Unknown category: " + category)
+
 
 def _get_club(club_name: str, oris: Oris) -> Club:
     clubs = oris.getCSOSClubList()
@@ -63,23 +65,26 @@ class RocenkaImpl:
     #     ret = Klada().calculate(self.filter(results, Category.MEN))
     #     print(ret)
 
-    def _calculate_larva(self, year):
-        results = self._get_year_results(year)
-        return Klada().calculate(self.filter(results, Category.WOMAN))
+    def _load(self, year: int):
+        self.year_results[year] = self._obtain_year_results(year)
 
-    def _calculate_klada(self, year):
+    def _calculate_klada(self, year: int, category: Category):
         results = self._get_year_results(year)
-        return Klada().calculate(self.filter(results, Category.MEN))
+        return Klada().calculate(self.filter(results, category))
 
-    def _calculate_skalper(self, year):
+    def _calculate_skalper(self, year: int, category: Category):
         results = self._get_year_results(year)
         # TODO
-        return Skalper().calculate(self.filter(results, Category.MEN))
+        return Skalper().calculate(self.filter(results, category))
 
-    def _calculate_skalperka(self, year):
+    def _calculate_obeslo(self, year):
+        results = self._get_year_results(year)
+        return Obeslo().calculate(self.filter(results, Category.WOMAN))
+
+    def _calculate_ranking(self, year: int, category: Category):
         results = self._get_year_results(year)
         # TODO
-        return Skalper().calculate(self.filter(results, Category.WOMAN))
+        return Ranking().calculate(self.filter(results, category))
 
     def _get_year_results(self, year: int) -> list[pd.DataFrame]:
         """
@@ -88,7 +93,7 @@ class RocenkaImpl:
         :return: list of all results with club competitors per race and per category
         """
         if year not in self.year_results:
-            self.year_results[year] = self._obtain_year_results(year)
+            raise Exception("You must load this year " + str(year) + " beforehand.")
         return self.year_results[year]
 
     def _obtain_year_results(self, year: int) -> list[pd.DataFrame]:
@@ -100,7 +105,6 @@ class RocenkaImpl:
 
         results = self._obtain_results([event["ID"] for _, event in events.items()])
 
-        #TODO make it more functional
         relevant_results = self._filter_club_and_categories(results)
 
         final_results = self._split_by_category(relevant_results)
@@ -115,8 +119,9 @@ class RocenkaImpl:
         for result in results:
             if len(result) == 0:
                 continue
-            # TODO here could be logic for separating categories
-            filtered_result = [r for _, r in result.items() if "21" in r["ClassDesc"] and self.my_club.registration in r["RegNo"][:3]]
+
+            filtered_result = [r for _, r in result.items() if
+                               "21" in r["ClassDesc"] and self.my_club.registration in r["RegNo"][:3]]
             if len(filtered_result) > 0:
                 yield filtered_result
 
@@ -130,6 +135,6 @@ class RocenkaImpl:
     def _create_table(result: list[dict]) -> pd.DataFrame:
         return pd.DataFrame(result)
 
-
-    def filter(self, results, category: Category):
-        return [r for r in results if Category.from_str(r.iloc[0]["ClassDesc"]) == category]
+    @staticmethod
+    def filter(results, category: Category):
+        return [r for r in results if from_str(r.iloc[0]["ClassDesc"]) == category]

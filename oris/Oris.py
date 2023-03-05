@@ -1,8 +1,7 @@
 import requests
 # import faster_than_requests as requests
-import json
 import datetime as dt
-from .util import generate_fields
+from utils.util import generate_fields
 from .constants import Sport, Region, Level
 
 
