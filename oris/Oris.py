@@ -1,10 +1,13 @@
-import requests
 # import faster_than_requests as requests
-import json
 import datetime as dt
-from .util import generate_fields
-from .constants import Sport, Region, Level
 
+import requests
+
+from oris.constants import Sport, Region, Level
+from utils.util import generate_fields
+
+
+# TODO turn request asynchronous
 
 @generate_fields
 class Oris:
@@ -61,7 +64,7 @@ class Oris:
         )
 
     def get_event_rank_results(self,
-                               event_id:int,
+                               event_id: int,
                                class_id: int = None,
                                class_name: str = None
                                ):
@@ -84,7 +87,6 @@ class Oris:
                 'classname': class_name
             }
         )
-
 
     def get_event(self, ):
         """
