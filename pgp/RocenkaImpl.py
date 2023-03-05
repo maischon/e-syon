@@ -22,13 +22,13 @@ class Club:
 
 class Category(Enum):
     MEN = 1,
-    WOMAN = 2
+    WOMEN = 2
 
 def from_str(category: str):
     if "H" in category.upper() or "M" in category.upper():
         return Category.MEN
     if "D" in category.upper() or "W" in category.upper():
-        return Category.WOMAN
+        return Category.WOMEN
     raise Exception("Unknown category: " + category)
 
 
@@ -79,7 +79,7 @@ class RocenkaImpl:
 
     def _calculate_obeslo(self, year):
         results = self._get_year_results(year)
-        return Obeslo().calculate(self.filter(results, Category.WOMAN))
+        return Obeslo().calculate(self.filter(results, Category.WOMEN))
 
     def _calculate_ranking(self, year: int, category: Category):
         results = self._get_year_results(year)
