@@ -4,7 +4,7 @@ from itertools import groupby
 
 import pandas as pd
 
-from Skalper import Skalper
+from pgp.Skalper import Skalper
 from oris.Oris import Oris
 from utils.util import generate_fields
 from pgp.Klada import Klada

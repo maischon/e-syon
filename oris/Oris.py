@@ -2,7 +2,7 @@ import requests
 # import faster_than_requests as requests
 import datetime as dt
 from utils.util import generate_fields
-from .constants import Sport, Region, Level
+from oris.constants import Sport, Region, Level
 
 
 @generate_fields
