@@ -4,6 +4,8 @@ from itertools import groupby
 
 import pandas as pd
 
+from pgp.Obeslo import Obeslo
+from pgp.Ranking import Ranking
 from pgp.Skalper import Skalper
 from oris.Oris import Oris
 from utils.util import generate_fields
@@ -48,6 +50,7 @@ class RocenkaImpl:
         self.my_club: Club = _get_club(club_ame, self.oris)
         self.year_results = {}
 
+    #TODO delete
     # def test(self):
     #
     #     print(self.oris.get_event_list(all=True,
@@ -70,21 +73,21 @@ class RocenkaImpl:
 
     def _calculate_klada(self, year: int, category: Category):
         results = self._get_year_results(year)
-        return Klada().calculate(self.filter(results, category))
+        return Klada().calculate(self.filter(results=results, category=category))
 
     def _calculate_skalper(self, year: int, category: Category):
         results = self._get_year_results(year)
         # TODO
-        return Skalper().calculate(self.filter(results, category))
+        return Skalper().calculate(self.filter(results=results, category=category))
 
-    def _calculate_obeslo(self, year):
+    def _calculate_obeslo(self, year: int, category: Category):
         results = self._get_year_results(year)
-        return Obeslo().calculate(self.filter(results, Category.WOMEN))
+        return Obeslo().calculate(self.filter(results=results, category=category))
 
     def _calculate_ranking(self, year: int, category: Category):
         results = self._get_year_results(year)
         # TODO
-        return Ranking().calculate(self.filter(results, category))
+        return Ranking().calculate(self.filter(results=results, category=category))
 
     def _get_year_results(self, year: int) -> list[pd.DataFrame]:
         """

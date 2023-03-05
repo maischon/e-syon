@@ -2,5 +2,5 @@
 
 class Skalper:
 
-    def calculate(self):
+    def calculate(self, results):
         pass

@@ -8,21 +8,21 @@ class Rocenka(RocenkaImpl):
     def load(self, year: int = dt.datetime.now().year):
         return self._load(year)
 
-    def calculate_obeslo(self, category: Category):
+    def calculate_obeslo(self, category: Category, year: int = dt.datetime.now().year):
         """
         Calculates larva for given year.
         :return: Table containing larva
         """
-        return self._calculate_obeslo(category)
+        return self._calculate_obeslo(year, category)
 
-    def calculate_klada(self, category: Category):
+    def calculate_klada(self, category: Category, year: int = dt.datetime.now().year):
         """
         Calculates klada or larva for given year.
         """
-        return self._calculate_klada(category)
+        return self._calculate_klada(category, year)
 
-    def calculate_skalper(self, category: Category):
+    def calculate_skalper(self, category: Category, year: int = dt.datetime.now().year):
         """
         Calculates skalper for given year and given category.
         """
-        return self._calculate_skalper(category)
+        return self._calculate_skalper(category, year)

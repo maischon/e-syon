@@ -36,6 +36,7 @@ class Klada(BaseCalculator):
         ret["Points"] = ret["Points"].astype(int)
         ret = ret.sort_values(["Points", "Races", "Name"], ascending=[True, False, True])
         ret.reset_index(inplace=True, drop=True)
+        ret.index += 1
         return ret[["Name", "Points", "Races"]]
 
     @staticmethod

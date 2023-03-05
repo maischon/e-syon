@@ -1,6 +1,6 @@
 
 
-class Skalper:
+class Ranking:
 
-    def calculate(self):
+    def calculate(self, results):
         pass
