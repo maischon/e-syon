@@ -13,17 +13,20 @@ class Skalper:
     def calculate(self, results):
         for result in results:
 
-            #TODO check times are sorted
+            #TODO check times are sorted (by place)
 
             self._register_defeats(result)
 
         return self._calculate_output()
 
     def _register_defeats(self, result):
+
+        # TODO - check disks (they are not defeats)
+
         for index, row in result.iterrows():
             self._put_name(row)
             registration = row["RegNo"]
-            for _, defeated in result.loc[index:]:
+            for _, defeated in result.loc[index:, :].iterrows():
                 self.defeated[registration][defeated["RegNo"]] += 1
 
     def _put_name(self, row):
