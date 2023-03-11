@@ -8,5 +8,5 @@ if __name__ == '__main__':
     r = Rocenka("PGP")
     r.load(2022)
     # r.test()
-    print(r.calculate_obeslo(year=2022, category=Category.MEN))
-    print(r.calculate_obeslo(year=2022, category=Category.WOMEN))
+    print(r.calculate_skalper(year=2022, category=Category.MEN))
+    # print(r.calculate_obeslo(year=2022, category=Category.WOMEN))
