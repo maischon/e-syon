@@ -5,12 +5,12 @@ from itertools import groupby
 
 import pandas as pd
 
+from oris.Oris import Oris
+from pgp.Klada import Klada
 from pgp.Obeslo import Obeslo
 from pgp.Ranking import Ranking
 from pgp.Skalper import Skalper
-from oris.Oris import Oris
 from utils.util import generate_fields
-from pgp.Klada import Klada
 
 
 @generate_fields
@@ -26,6 +26,7 @@ class Club:
 class Category(Enum):
     MEN = 1,
     WOMEN = 2
+
 
 def from_str(category: str):
     if "H" in category.upper() or "M" in category.upper():
@@ -51,7 +52,7 @@ class RocenkaImpl:
         self.my_club: Club = _get_club(club_ame, self.oris)
         self.year_results = {}
 
-    #TODO delete
+    # TODO delete
     # def test(self):
     #
     #     print(self.oris.get_event_list(all=True,
@@ -82,7 +83,6 @@ class RocenkaImpl:
 
     def _calculate_skalper(self, year: int, category: Category):
         results = self._get_year_results(year)
-        # TODO
         return Skalper().calculate(self.filter(results=results, category=category))
 
     def _calculate_obeslo(self, year: int, category: Category):

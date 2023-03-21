@@ -179,16 +179,3 @@ class Oris:
             if self.is_verbose:
                 print(e)
         return dt.time()
-
-    @staticmethod
-    def i_dont_know_what_that_is(self):
-        # TODO probably check enums
-        for enum in ['region', 'discipline', 'sport', 'level', 'sourcetype']:
-            e = self._get('getList', {'list': enum})
-            attribs = e.values().__iter__().__next__()
-            for k in attribs:
-                if 'Desc' in k:
-                    name = k
-                    break
-
-            locals()[enum] = {value[name]: value['ID'] for _, value in e.items()}
