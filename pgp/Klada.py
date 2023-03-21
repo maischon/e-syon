@@ -3,6 +3,7 @@ from collections import defaultdict
 import pandas as pd
 
 from pgp.BaseCalculator import BaseCalculator
+from pgp.util import check_results_are_sorted
 
 
 class Klada(BaseCalculator):
@@ -13,14 +14,14 @@ class Klada(BaseCalculator):
     def calculate(self, results):
         for result in [r for r in results if len(r) >= 3]:
 
+            check_results_are_sorted(result)
+
             self.add_race(result)
 
             disks, rest = self._split_disks(result)
 
             for _, row in disks.iterrows():
                 self._give_klada(row)
-
-            #TODO check times are sorted
 
             if len(rest) >= 3:
                 self._give_klada(rest.iloc[-1])

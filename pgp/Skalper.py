@@ -1,7 +1,8 @@
 from collections import defaultdict
-from itertools import product
 
 import pandas as pd
+
+from pgp.util import check_results_are_sorted
 
 
 class Skalper:
@@ -12,8 +13,7 @@ class Skalper:
 
     def calculate(self, results):
         for result in results:
-
-            #TODO check times are sorted (by place)
+            check_results_are_sorted(result)
 
             self._register_defeats(result)
 
@@ -36,21 +36,37 @@ class Skalper:
 
     def _calculate_output(self):
         df = pd.DataFrame(columns=self.names, index=self.names)
+        scores = pd.DataFrame(0, index=self.names, columns=["Points", "Wins", "Defeats"])
 
         def result(first, second):
-            if first == second:
-                return ""
-            return "{}:{}".format(
-                self.defeated[first][second],
-                self.defeated[second][first]
-            )
+            return self.defeated[first][second], self.defeated[second][first]
 
-        for i,j in product(range(len(df)), range(len(df))):
-            df.iloc[i,j] = result(df.columns[i], df.index[j])
+        for i in range(len(df)):
+            for j in range(i + 1, len(df)):
+                a, b = result(df.columns[i], df.index[j])
+                df.iloc[i, j] = "{}:{}".format(a, b)
+                df.iloc[j, i] = "{}:{}".format(b, a)
+                if a > b:
+                    scores.loc[df.columns[i], "Points"] += 1
+                if b > a:
+                    scores.loc[df.index[j], "Points"] += 1
+                scores.loc[df.columns[i], "Wins"] += a
+                scores.loc[df.columns[i], "Defeats"] += b
+                scores.loc[df.index[j], "Wins"] += b
+                scores.loc[df.index[j], "Defeats"] += a
+
+        scores["diff"] = scores["Wins"] - scores["Defeats"]
+
+        df = df.join(scores)
+
+        df.sort_values(by=["Points", "diff"], inplace=True, ascending=[False, False])
+        df = df[df.index.tolist() + ["Points", "diff", "Wins", "Defeats"]]
+
+        df["Score"] = df["Wins"].astype(str) + ":" + df["Defeats"].astype(str)
+        df.drop(["Wins", "Defeats", "diff"], axis=1, inplace=True)
 
         # switch registration numbers to names
-        df.columns = [self.names[c] for c in df.columns]
         df.index = [self.names[c] for c in df.index]
+        df.columns = df.index.tolist() + ["Points", "Score"]
 
-        # TODO sort by results
         return df
