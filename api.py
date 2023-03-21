@@ -26,3 +26,10 @@ class Rocenka(RocenkaImpl):
         Calculates skalper for given year and given category.
         """
         return self._calculate_skalper(year=year, category=category)
+
+    def calculate_ranking(self, category: Category, year: int = dt.datetime.now().year):
+        """
+        Calculates ranking for given year and given category.
+        """
+        # TODO
+        pass
