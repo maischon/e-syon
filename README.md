@@ -11,4 +11,6 @@ oris utilities for pgp
 # TODOS:
 - test basic scenarios
 - write gui/cli
-- write rest of the functionality (rank, obeslo, skalper)
+- write rest of the functionality (rank)
+- write rest of oris lib??
+- there could be taken also other results than ranking results

@@ -5,8 +5,8 @@ import datetime as dt
 class Rocenka(RocenkaImpl):
     def __init__(self, club_name: str): super().__init__(club_name)
 
-    def load(self, year: int = dt.datetime.now().year):
-        return self._load(year=year)
+    def download(self, year: int = dt.datetime.now().year):
+        return self._download(year=year)
 
     def calculate_obeslo(self, category: Category, year: int = dt.datetime.now().year):
         """
@@ -31,5 +31,4 @@ class Rocenka(RocenkaImpl):
         """
         Calculates ranking for given year and given category.
         """
-        # TODO
-        pass
+        raise NotImplementedError
