@@ -52,30 +52,16 @@ class RocenkaImpl:
         self.my_club: Club = _get_club(club_ame, self.oris)
         self.year_results = {}
 
-    # TODO delete
-    # def test(self):
-    #
-    #     print(self.oris.get_event_list(all=True,
-    #                                       my_club=self.my_club.id,
-    #                                       date_from=dt.date(2022, 1, 1),
-    #                                       date_to=dt.date(2022, 12, 31)
-    #                                       ))
-    #
-    #     results = self._obtain_results([5558])
-    #     relevant_results = self._filter_club_and_categories(results)
-    #
-    #     final_results = self._split_by_category(relevant_results)
-    #
-    #     results = [self._create_table(result) for result in final_results]
-    #     ret = Klada().calculate(self.filter(results, Category.MEN))
-    #     print(ret)
-
-    def _load(self, year: int):
+    def download(self, year: int = dt.datetime.now().year):
         self.year_results[year] = self._obtain_year_results(year)
 
-    def _save_loaded_data(self):
-        with open('tmp.pickle', 'wb') as f:
+    def save_downloaded_data(self, file_name: str):
+        with open(file_name+'.pickle', 'wb') as f:
             pickle.dump(self.year_results, f)
+
+    def load_downloaded_data(self, file_name: str):
+        with open(file_name+'.pickle', 'wb') as f:
+            self.year_results = pickle.load(f)
 
     def _calculate_klada(self, year: int, category: Category):
         results = self._get_year_results(year)
