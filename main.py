@@ -10,3 +10,4 @@ if __name__ == '__main__':
     print(r.calculate_obeslo(year=2022, category=Category.WOMEN))
     print(r.calculate_klada(year=2022, category=Category.MEN))
     print(r.calculate_klada(year=2022, category=Category.WOMEN))
+    # r.export()

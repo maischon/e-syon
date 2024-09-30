@@ -5,6 +5,10 @@ import datetime as dt
 class Rocenka(RocenkaImpl):
     def __init__(self, club_name: str): super().__init__(club_name)
 
+    def export(self):
+        # TODO
+        pass
+
     def download(self, year: int = dt.datetime.now().year):
         return self._download(year=year)
 
