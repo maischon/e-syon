@@ -3,10 +3,18 @@ oris utilities for pgp
 
 
 # build
-- use python 11
+- use at least python 11
 - use [poetry](https://python-poetry.org/)
 
-`(Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -`
+( For Powershell:
+`(Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -`)
+- poetry:
+  - `poetry install`
+  - `poetry update` (if some packages are outdated)
+- to run it:
+  - either use main `python main.py`
+  - or api functions
+
 
 # TODOS:
 - test basic scenarios
