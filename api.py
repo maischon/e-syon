@@ -14,14 +14,14 @@ class Rocenka(RocenkaImpl):
 
     def calculate_obeslo(self, category: Category, year: int = dt.datetime.now().year):
         """
-        Calculates larva for given year.
-        :return: Table containing larva
+        Calculates obeslo for given year and given category.
+        :return: Table containing obeslo
         """
         return self._calculate_obeslo(year=year, category=category)
 
     def calculate_klada(self, category: Category, year: int = dt.datetime.now().year):
         """
-        Calculates klada or larva for given year.
+        Calculates klada or larva for given year and given category.
         """
         return self._calculate_klada(year=year, category=category)
 

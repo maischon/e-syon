@@ -18,7 +18,7 @@ oris utilities for pgp
 
 # TODOS:
 - test basic scenarios
-- write gui/cli
+- write gui (???) / cli (click, typer??)
 - write rest of the functionality (rank)
 - write rest of oris lib??
 - there could be taken also other results than ranking results
